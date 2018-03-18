@@ -45,7 +45,7 @@ public class Main {
             try {
                 amount = new BigDecimal(unnamedArgs.get(0));
             } catch (Exception e) {
-                amount = BigDecimal.ZERO;
+                amount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
                 System.out.println(String.format("Use default amount of %s.", amount.toString()));
             }
         }
