@@ -4,7 +4,6 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,8 +74,8 @@ public class Main {
     private void calculateResult() {
         NBRBRate rate = NBRBRate.getRate(date, currency);
         BigDecimal result = amount
-                .multiply(rate.Cur_OfficialRate)
-                .divide(rate.Cur_Scale, RoundingMode.HALF_UP)
+                .multiply(rate.officialRate)
+                .divide(rate.scale, RoundingMode.HALF_UP)
                 .setScale(2, RoundingMode.HALF_UP);
 
         System.out.println(rate);

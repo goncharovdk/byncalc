@@ -16,23 +16,23 @@ public class NBRBRate {
     // {"Cur_ID":292,"Date":"2018-03-17T00:00:00","Cur_Abbreviation":"EUR","Cur_Scale":1,"Cur_Name":"Евро","Cur_OfficialRate":2.4171}
 
     @SerializedName("Cur_ID")
-    String Cur_ID;
+    String currencyId;
 
     @SerializedName("Date")
     @JsonAdapter(DateJsonAdapter.class)
-    Date Date;
+    Date date;
 
     @SerializedName("Cur_Abbreviation")
-    String Cur_Abbreviation;
+    String abbreviation;
 
     @SerializedName("Cur_Scale")
-    BigDecimal Cur_Scale;
+    BigDecimal scale;
 
     @SerializedName("Cur_Name")
-    String Cur_Name;
+    String name;
 
     @SerializedName("Cur_OfficialRate")
-    BigDecimal Cur_OfficialRate;
+    BigDecimal officialRate;
 
     private static final String urlTemplate = "http://www.nbrb.by/API/ExRates/Rates/%s?onDate=%s&ParamMode=2";
 
@@ -58,7 +58,7 @@ public class NBRBRate {
     @Override
     public String toString() {
         final SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        return String.format("Rate of %s on %s is %s BYN for %s units.", Cur_Abbreviation, df.format(Date), Cur_OfficialRate.toString(), Cur_Scale.toString());
+        return String.format("Rate of %s on %s is %s BYN for %s units.", abbreviation, df.format(date), officialRate.toString(), scale.toString());
     }
 
 }
