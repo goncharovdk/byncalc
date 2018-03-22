@@ -10,11 +10,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-class DateJsonAdapter extends TypeAdapter<Date> {
+/**
+* To be used as GSON JsonAdapter.
+*/
+
+class NBRBDateJsonAdapter extends TypeAdapter<Date> {
 
     private final SimpleDateFormat df;
 
-    public DateJsonAdapter() {
+    public NBRBDateJsonAdapter() {
         df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
     }

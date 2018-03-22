@@ -19,7 +19,7 @@ public class NBRBRate {
     String currencyId;
 
     @SerializedName("Date")
-    @JsonAdapter(DateJsonAdapter.class)
+    @JsonAdapter(NBRBDateJsonAdapter.class)
     Date date;
 
     @SerializedName("Cur_Abbreviation")

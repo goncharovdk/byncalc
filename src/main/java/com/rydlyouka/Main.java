@@ -1,5 +1,6 @@
 package com.rydlyouka;
 
+import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
@@ -23,7 +24,8 @@ public class Main {
     String currency;
 
     @Parameter(names={"--date", "-d"},
-            description = "Currency rate date")
+            description = "Currency rate date",
+            converter = DateConverter.class)
     Date date;
 
     @Parameter()
@@ -43,7 +45,7 @@ public class Main {
     private void checkParameters() {
         if (amount == null) {
             try {
-                amount = new BigDecimal(unnamedArgs.get(0));
+                amount = new BigDecimal(unnamedArgs.get(0)).setScale(2, RoundingMode.HALF_UP);
             } catch (Exception e) {
                 amount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
                 System.out.println(String.format("Use default amount of %s.", amount.toString()));
@@ -58,28 +60,33 @@ public class Main {
                 System.out.println(String.format("Use default currency of %s.", currency));
             }
         }
+        currency = currency.toUpperCase();
 
         if (date == null) {
-            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-            try {
-                String unnamedDate = unnamedArgs.get(2);
-                date = df.parse(unnamedDate);
-            } catch (Exception e) {
-                date = new Date();
-                System.out.println(String.format("Use default date of %s.", df.format(date)));
-            }
+            DateConverter converter = new DateConverter();
+            String unnamedDate = unnamedArgs.get(2);
+            date = converter.convert(unnamedDate);
+        }
+        if (date == null) {
+            date = new Date();
+            System.out.println(String.format("Use default date of %s (today).", DateConverter.format(date)));
         }
     }
 
     private void calculateResult() {
         NBRBRate rate = NBRBRate.getRate(date, currency);
+        if (rate == null) {
+            System.out.println("Exchange rate is not available");
+            return;
+        }
+        
         BigDecimal result = amount
                 .multiply(rate.officialRate)
                 .divide(rate.scale, RoundingMode.HALF_UP)
                 .setScale(2, RoundingMode.HALF_UP);
 
         System.out.println(rate);
-        System.out.println(String.format("%s %s is %s BYN.", amount.toString(), currency, result.toString()));
+        System.out.println(String.format("%s %s is %s BYN.", amount.setScale(2, RoundingMode.HALF_UP).toString(), currency, result.toString()));
     }
 
 }
