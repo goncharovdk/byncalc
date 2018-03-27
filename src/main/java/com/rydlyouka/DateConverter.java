@@ -11,6 +11,7 @@ import java.util.TimeZone;
 public class DateConverter implements IStringConverter<Date> {
 
     private static final SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+    private static final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Minsk"));
 
     @Override
     public Date convert(String value) {
@@ -19,8 +20,7 @@ public class DateConverter implements IStringConverter<Date> {
         } catch (ParseException e) {
             try {
                 return df.parse(
-                        String.format("%s.%s", value,
-                                Calendar.getInstance(TimeZone.getTimeZone("Europe/Minsk")).get(Calendar.YEAR)));
+                        String.format("%s.%s", value,calendar.get(Calendar.YEAR)));
             } catch (ParseException e1) {
                 e1.printStackTrace();
                 return null;

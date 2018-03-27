@@ -64,8 +64,12 @@ public class Main {
 
         if (date == null) {
             DateConverter converter = new DateConverter();
-            String unnamedDate = unnamedArgs.get(2);
-            date = converter.convert(unnamedDate);
+            try {
+                String unnamedDate = unnamedArgs.get(2);
+                date = converter.convert(unnamedDate);
+            } catch (Exception e) {
+                date = null;
+            }
         }
         if (date == null) {
             date = new Date();
