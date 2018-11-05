@@ -22,7 +22,8 @@ public class DateConverter implements IStringConverter<Date> {
                 return df.parse(
                         String.format("%s.%s", value,calendar.get(Calendar.YEAR)));
             } catch (ParseException e1) {
-                e1.printStackTrace();
+                // e1.printStackTrace();
+                System.err.println(e1.getMessage());
                 return null;
             }
         }

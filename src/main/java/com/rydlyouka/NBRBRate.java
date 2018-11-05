@@ -43,14 +43,16 @@ public class NBRBRate {
         try {
             url = new URL(String.format(urlTemplate, currency, df.format(date)));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
 
         try (InputStreamReader in = new InputStreamReader(url.openStream())) {
             return new Gson().fromJson(in, NBRBRate.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }

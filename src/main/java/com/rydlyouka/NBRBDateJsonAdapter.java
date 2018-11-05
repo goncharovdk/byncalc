@@ -33,7 +33,8 @@ class NBRBDateJsonAdapter extends TypeAdapter<Date> {
         try {
             return df.parse(in.nextString());
         } catch (ParseException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }

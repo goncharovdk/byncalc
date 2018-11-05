@@ -1,17 +1,15 @@
 package com.rydlyouka;
 
-import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Main {
+public class BYNcalc {
 
     final static String defaultCurrency = "USD";
 
@@ -28,18 +26,26 @@ public class Main {
             converter = DateConverter.class)
     Date date;
 
+    @Parameter(names={"--help", "-h"}, help = true)
+    private boolean help;
+    
     @Parameter()
     private List<String> unnamedArgs = new ArrayList<>();
 
     public static void main(String... argv) {
-	    Main main = new Main();
+	    BYNcalc byncalc = new BYNcalc();
 
-        JCommander commander = JCommander.newBuilder().addObject(main).build();
+        JCommander commander = JCommander.newBuilder().addObject(byncalc).build();
         commander.setCaseSensitiveOptions(false);
         commander.parse(argv);
 
-        main.checkParameters();
-        main.calculateResult();
+        if (byncalc.help) {
+            commander.usage();
+            return;
+        }
+
+        byncalc.checkParameters();
+        byncalc.calculateResult();
     }
 
     private void checkParameters() {
