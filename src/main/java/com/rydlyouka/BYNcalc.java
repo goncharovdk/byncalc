@@ -28,7 +28,7 @@ public class BYNcalc {
 
     @Parameter(names={"--help", "-h"}, help = true)
     private boolean help;
-    
+
     @Parameter()
     private List<String> unnamedArgs = new ArrayList<>();
 

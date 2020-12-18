@@ -34,7 +34,7 @@ public class NBRBRate {
     @SerializedName("Cur_OfficialRate")
     BigDecimal officialRate;
 
-    private static final String urlTemplate = "http://www.nbrb.by/API/ExRates/Rates/%s?onDate=%s&ParamMode=2";
+    private static final String urlTemplate = "https://www.nbrb.by/api/exrates/rates/%s?onDate=%s&ParamMode=2";
 
     public static NBRBRate getRate(Date date, String currency) {
         final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
